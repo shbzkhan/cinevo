@@ -4,8 +4,8 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 const RootLayout = () => {
   return (
   <SafeAreaView>
-    <View className = "flex-1 justify-center, items-center">
-      <Text className= "text-3xl" >Welcome</Text>
+    <View className = "flex justify-center items-center">
+      <Text className  = "text-3xl">Welcome</Text>
     </View>
     </SafeAreaView>
   )
