@@ -6,7 +6,6 @@ import {images} from "../../constants"
 import FormField from '../../components/FormField'
 import CustomButton from "../../components/CustomButton.jsx"
 import { Link } from 'expo-router'
-import { supabase } from '../../lib/supabase'
 const SignUp = () => {
   const [form, setForm] = useState({
     username: "",
@@ -17,7 +16,6 @@ const SignUp = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const submit = async() =>{
-const {error} = await supabase.auth.SignUp()
   }
   return (
     <SafeAreaView className="bg-primary h-full">
