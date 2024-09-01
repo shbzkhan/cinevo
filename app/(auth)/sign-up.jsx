@@ -33,6 +33,8 @@ const SignUp = () => {
     router.replace("/home")
    } catch (error) {
     Alert.alert("Error", error.message)
+    console.log(error);
+    
    } finally {
     setIsSubmitting(false)
    }
