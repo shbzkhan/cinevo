@@ -2,7 +2,7 @@ import { useEffect } from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import {SplashScreen ,Stack } from 'expo-router'
 import {useFonts} from "expo-font"
-import GlobalProvider from '../context/GlobalProvider'
+import GlobalProvider from '../context/GlobalProvider.js'
 
  SplashScreen.preventAutoHideAsync()
 
@@ -39,7 +39,7 @@ const RootLayout = () => {
     {/* <Stack.Screen name ="/search/[query]" options={{headerShown: false}}/> */}
 
  </Stack>
- </GlobalProvider>
+</GlobalProvider>
   )
 }
 

@@ -5,9 +5,8 @@ import { ScrollView } from 'react-native'
 import {images} from "../../constants"
 import FormField from '../../components/FormField'
 import CustomButton from "../../components/CustomButton.jsx"
-import { Link, Redirect } from 'expo-router'
+import { Link, router} from 'expo-router'
 import { createUser } from '../../lib/appwrite.js'
-import router from "expo-router"
 const SignUp = () => {
   const [form, setForm] = useState({
     username: "",
