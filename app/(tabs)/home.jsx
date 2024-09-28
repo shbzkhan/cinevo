@@ -5,12 +5,21 @@ import { images } from '../../constants'
 import SearchInput from '../../components/SearchInput'
 import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
+import { useState } from 'react'
+import { StatusBar } from 'expo-status-bar'
 
 const Home = () => {
   const [refreshing, setRefreshing] = useState(false)
 
+  const onRefresh = async () =>{
+    setRefreshing(true)
+    // re call videos -> if any videos appeard
+    setRefreshing(false)
+  }
+
   return (
     <SafeAreaView className="bg-primary h-full">
+    <StatusBar style='light' />
       <FlatList
       data={[{id: 1},{id:2}, {id:3}]}
       keyExtractor={(item)=>{item.$id}}
@@ -49,7 +58,10 @@ const Home = () => {
         />
       )}
       refreshControl={
-        <RefreshControl/>
+        <RefreshControl
+        refreshing={refreshing}
+        onRefresh={onRefresh}
+        />
       }
       />
     </SafeAreaView>
