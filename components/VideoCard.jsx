@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { icons } from '../constants'
 import {Video, ResizeMode} from "expo-av"
 
-const VideoCard = ({video:{ title, thumbnail, video, creator:{username, avatar}}}) => {
+const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}}}) => {
     const [play, setPlay] = useState(false)
   return (
     <View className="flex-col items-center px-4 mb-14">
@@ -17,10 +17,14 @@ const VideoCard = ({video:{ title, thumbnail, video, creator:{username, avatar}}
                     />
                 </View>
                     <View className="justify-center flex-1 ml-3 gap-y-1">
-                        <Text className="text-white font-psemibold text-sm">
+                        <Text className="text-white font-psemibold text-sm"
+                        numberOfLines={1}
+                        >
                             {title}
                         </Text>
-                        <Text className="text-xs text-gray-100 font-pregular">
+                        <Text className="text-xs text-gray-100 font-pregular"
+                        numberOfLines={1}
+                        >
                             {username}
                         </Text>
                     </View>
@@ -35,17 +39,17 @@ const VideoCard = ({video:{ title, thumbnail, video, creator:{username, avatar}}
         </View>
         {play? (
             <Video
-            source={{uri:video}}
-            className="w-full h-60 rounded-xl mt-3"
-            resizeMode={ResizeMode.CONTAIN}
-            useNativeControls
-            shouldPlay
-            onPlaybackStatusUpdate={(status) =>{
-              if(status.didJustFinish){
-                setPlay(false)
-              }
-            }}
-          />
+                source={{ uri: video }}
+                className="w-full h-60 rounded-xl mt-3"
+                resizeMode={ResizeMode.CONTAIN}
+                useNativeControls
+                shouldPlay
+                onPlaybackStatusUpdate={(status) => {
+                    if (status.didJustFinish) {
+                    setPlay(false);
+                    }
+                }}
+           />
         ):(
             <TouchableOpacity
             activeOpacity={0.7}

@@ -10,11 +10,12 @@ import { StatusBar } from 'expo-status-bar'
 import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
 import useAppwrite from '../../lib/useAppwrite'
 import VideoCard from '../../components/VideoCard'
+import { useGlobalContext } from '../../context/GlobalProvider'
 
 const Home = () => {
 const {data: posts, refetch} = useAppwrite(getAllPosts)
 const {data: latestPosts} = useAppwrite(getLatestPosts)
-
+const {user}= useGlobalContext()
   const [refreshing, setRefreshing] = useState(false)
 
   const onRefresh = async () =>{
@@ -40,7 +41,9 @@ const {data: latestPosts} = useAppwrite(getLatestPosts)
           <View className="justify-between items-start flex-row mb-6">
           <View>
             <Text className="font-pmedium text-sm text-gray-100">Welcome back</Text>
-            <Text className="text-2xl font-psemibold text-white">Aora</Text>
+            <Text className="text-2xl font-psemibold text-white">
+              {user?.username.charAt(0).toUpperCase() + user?.username.slice(1)}
+              </Text>
           </View>
 
           <View className="mt-1.5">
