@@ -18,7 +18,7 @@ const Create = () => {
     video: null,
     thumbnail: null,
     prompt: ""
-  })
+  });
 
   const openPicker = async (SelectType) =>{
     let result = await ImagePicker.launchImageLibraryAsync({
@@ -30,10 +30,12 @@ const Create = () => {
     if(!result.canceled){
       if(SelectType === "image"){
         setForm({ ...form, thumbnail: result.assets[0] })
+        console.log('thumbnail uploaded')
       }
 
       if(SelectType === "video"){
         setForm({ ...form, video: result.assets[0] })
+        console.log('video uploaded')
       }
     }
   }
@@ -48,15 +50,16 @@ const Create = () => {
     try {
       await createVideo({
         ...form, userId: user.$id
-      })
+      });
       
       Alert.alert("Success", "Post uploaded successfully")
       router.push("/home")
-    } catch (error) {
+    } catch(error) {
       Alert.alert("Error", error.message)
+      console.log("thumbmail", error)
     } finally{
       setForm({
-        title: "",
+          title: "",
           video: null,
           thumbnail: null,
           prompt: ""
@@ -115,8 +118,9 @@ const Create = () => {
             >
                 {form.thumbnail ? (
                  <Image
-                  source={{uri: form.thumbnail.uri}}
-                  resizeMode='w-full h-64 rounded-2xl'
+                  source={{ uri: form.thumbnail.uri }}
+                  className='w-full h-64 rounded-2xl'
+                  resizeMode='cover'
                  />
                 ):(
                 <View className="w-full h-16 px-4 bg-black-100 rounded-2xl justify-center items-center border-black-200 flex-row space-x-2">
@@ -129,7 +133,8 @@ const Create = () => {
                         Choose a file
                     </Text>
                 </View>
-                )}
+                )
+                }
               </TouchableOpacity>
             </View>
 
