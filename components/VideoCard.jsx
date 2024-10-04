@@ -5,6 +5,15 @@ import {Video, ResizeMode} from "expo-av"
 
 const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}}}) => {
     const [play, setPlay] = useState(false)
+    const [menuTab, setMenuTab] = useState("hidden")
+
+    const menu = () =>{
+        if(menuTab === "hidden"){
+            setMenuTab("")
+        }else{
+            setMenuTab("hidden")
+        }
+    }
   return (
     <View className="flex-col items-center px-4 mb-14">
         <View className="flex-row gap-3 items-start">
@@ -29,13 +38,17 @@ const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}
                         </Text>
                     </View>
             </View>
-            <View className="pt-2">
+            <TouchableOpacity className="pt-2"
+            onPress={menu}
+            >
                 <Image
                 source={icons.menu}
                 className="w-5 h-5"
                 resizeMode='contain'
+                
                 />
-            </View>
+            </TouchableOpacity>
+          
         </View>
         {play? (
             <Video
@@ -54,6 +67,7 @@ const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}
             <TouchableOpacity
             activeOpacity={0.7}
             onPress={()=> setPlay(true)}
+            onPressIn={()=>setMenuTab("hidden")}
             className="w-full h-60 rounded-xl mt-3 relative justify-center items-center"
             >
             <Image
@@ -69,6 +83,27 @@ const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}
            </TouchableOpacity>
             
         )}
+          <View className = {`absolute top-9 right-4  pl-5 pr-10 py-3  bg-black-100 border border-black-200 rounded-sm ${menuTab}`}>
+          <TouchableOpacity className="mb-2 flex-row items-center gap-x-2">
+                 <Image
+                    source={icons.bookmark}
+                    className="w-4 h-4"
+                    resizeMode='contain'
+                
+                    />
+                <Text className="text-white font-psemibold pt-1">Save</Text> 
+           </TouchableOpacity>
+            <TouchableOpacity className="flex-row items-center gap-x-2">
+                <Image
+                source={icons.bookmark}
+                className="w-4 h-4"
+                resizeMode='contain'
+                
+                />
+                <Text className="text-white font-psemibold pt-1">Delete</Text> 
+          </TouchableOpacity>
+         
+            </View>
     </View>
   )
 }

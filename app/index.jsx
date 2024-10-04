@@ -16,7 +16,7 @@ if (!isLoading && isLoggedIn) { //isLoggedIn no redirect to home page so temp ch
 
   return (
     <SafeAreaView className = "bg-primary h-full">
-      <StatusBar style='light'/>
+      {/* <StatusBar style='light'/> */}
     <ScrollView contentContainerStyle={{height: "100%"}} >
       <View className="w-full justify-center items-center px-4">
               <Image

@@ -3,6 +3,7 @@ import { SafeAreaView } from 'react-native-safe-area-context'
 import {SplashScreen ,Stack } from 'expo-router'
 import {useFonts} from "expo-font"
 import GlobalProvider from '../context/GlobalProvider.js'
+import { StatusBar } from 'expo-status-bar'
 
  SplashScreen.preventAutoHideAsync()
 
@@ -31,6 +32,7 @@ const RootLayout = () => {
 
   return (
     <GlobalProvider>
+ <StatusBar style='light'/>
  <Stack>
 
     <Stack.Screen name ="index" options={{headerShown: false}}/>
