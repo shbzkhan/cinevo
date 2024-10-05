@@ -2,6 +2,7 @@
   "name": "aora",
   "version": "1.0.0",
   "main": "expo-router/entry",
+  "backgroundColor": "#161622",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

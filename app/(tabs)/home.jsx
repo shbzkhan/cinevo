@@ -34,7 +34,8 @@ const {user}= useGlobalContext()
       data={posts}
       keyExtractor={(item)=>{item.$id}}
       renderItem={({item})=>(
-          <VideoCard video={item}/>
+          <VideoCard video={item}
+          />
       )}
       ListHeaderComponent={(item)=>(
         <View className="my-6 px-4 space-y-6">

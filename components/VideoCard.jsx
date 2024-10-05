@@ -1,9 +1,12 @@
-import { View, Text, Image, TouchableOpacity } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { icons } from '../constants'
 import {Video, ResizeMode} from "expo-av"
+import { deletePost} from '../lib/appwrite'
+import { Alert } from 'react-native'
+import { useGlobalContext } from '../context/GlobalProvider'
 
-const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}}}) => {
+const VideoCard = ({video: { $id, title, thumbnail, video, creator:{username, avatar}}}) => {
     const [play, setPlay] = useState(false)
     const [menuTab, setMenuTab] = useState("hidden")
 
@@ -14,6 +17,18 @@ const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}
             setMenuTab("hidden")
         }
     }
+
+    const deleteVideo = async() =>{
+        try {
+            await deletePost($id)
+            setMenuTab("hidden")
+            Alert.alert("Success", "Post deleted successfully, Please refresh the page")
+        } catch (error) {
+            Alert.alert("Error", "Only the creator can delete the post")
+    }
+}
+
+    
   return (
     <View className="flex-col items-center px-4 mb-14">
         <View className="flex-row gap-3 items-start">
@@ -83,24 +98,25 @@ const VideoCard = ({video: { title, thumbnail, video, creator:{username, avatar}
            </TouchableOpacity>
             
         )}
-          <View className = {`absolute top-9 right-4  pl-5 pr-10 py-3  bg-black-100 border border-black-200 rounded-sm ${menuTab}`}>
+          <View className = {`absolute top-9 right-4  pl-4 pr-12 py-3  bg-black-100 border border-black-200 rounded-md ${menuTab}`}>
           <TouchableOpacity className="mb-2 flex-row items-center gap-x-2">
                  <Image
                     source={icons.bookmark}
-                    className="w-4 h-4"
+                    className="w-4 h-4 text-gray-100"
                     resizeMode='contain'
                 
                     />
-                <Text className="text-white font-psemibold pt-1">Save</Text> 
+                <Text className="text-gray-100 font-psemibold pt-1">Save</Text> 
            </TouchableOpacity>
-            <TouchableOpacity className="flex-row items-center gap-x-2">
+            <TouchableOpacity 
+            onPress={deleteVideo}
+            className="flex-row items-center gap-x-2">
                 <Image
-                source={icons.bookmark}
-                className="w-4 h-4"
+                source={icons.logout}
+                className="w-5 h-5"
                 resizeMode='contain'
-                
                 />
-                <Text className="text-white font-psemibold pt-1">Delete</Text> 
+                <Text className="text-gray-100 font-psemibold pt-1">Delete</Text> 
           </TouchableOpacity>
          
             </View>

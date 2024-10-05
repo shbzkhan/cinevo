@@ -1,4 +1,4 @@
-import { View,FlatList, TouchableOpacity, Image} from 'react-native'
+import { View,FlatList, TouchableOpacity, Image, ActivityIndicator} from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import EmptyState from '../../components/EmptyState'
@@ -25,7 +25,6 @@ const {data: posts} = useAppwrite(
 
     router.replace("/sign-in")
   }
-
   return (
     <SafeAreaView className="bg-primary h-full">
     <StatusBar style='light' />
