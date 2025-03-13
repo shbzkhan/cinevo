@@ -29,5 +29,8 @@ yarn-error.*
 *.pem
 # typescript
 *.tsbuildinfo
+<<<<<<< HEAD
 .gitignore
+=======
+>>>>>>> 561f4d49a2fcad0569a5b3c2b363f6e9130f935e
 .env
