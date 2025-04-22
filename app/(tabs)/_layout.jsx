@@ -2,31 +2,34 @@ import { View, Text, Image } from 'react-native'
 import React from 'react'
 import {icons} from "../../constants"
 import {Tabs, Redirect } from "expo-router"
+import { useGlobalContext } from '../../context/GlobalProvider'
 
-const TabIcon = ({icon, color, focused}) =>{
+
+const TabIcon = ({icon, color, focused,buttonStyle}) =>{
     return (
         <View>
             <Image
             source={icon}
             resizeMode='contain'
             tintColor={color}
-            className = "w-6 h-6"
+            className = {`w-6 h-6 ${buttonStyle}`}
             />
         </View>
     )
 }
 
 const TabsLayout = () => {
+    const{user, colorScheme} = useGlobalContext()
   return (
    <Tabs
    screenOptions={{
     tabBarShowLabel: false,
-    tabBarActiveTintColor: "#FfA001",
-    tabBarInactiveTintColor: "#CDCDE0",
+    tabBarActiveTintColor: colorScheme == "dark"?"#FFFFFF":"black", 
+    tabBarInactiveTintColor: colorScheme == "dark"?"#757575":"#757575",
     tabBarStyle: {
-        backgroundColor: "#161622",
-        borderTopWidth: 1,
-        borderTopColor: "#232533"
+        backgroundColor: colorScheme == "dark"?"black":"#FFFFFF",
+        paddingTop:9,
+        borderTopColor: colorScheme == "dark"?"#212121":"#E0E0E0",
     }
    }}
    >
@@ -72,9 +75,10 @@ const TabsLayout = () => {
     options={{
         headerShown: false,
         tabBarIcon: ({color, focused}) =>(
-            <TabIcon icon={icons.profile}
-            color = {color}
+            <TabIcon icon={ {uri:user.image}|| icons.profile}
+            //  color = {color}
             focused={focused}
+            buttonStyle = "rounded-full w-8 h-8"
             />
         )
     }}

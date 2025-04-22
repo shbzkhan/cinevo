@@ -1,126 +1,84 @@
 import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
 import React, { useState } from 'react'
 import { icons } from '../constants'
-import {Video, ResizeMode} from "expo-av"
 import { deletePost} from '../lib/appwrite'
 import { Alert } from 'react-native'
 import { useGlobalContext } from '../context/GlobalProvider'
+import axios from 'axios'
 
-const VideoCard = ({video: { $id, title, thumbnail, video, creator:{username, avatar}}}) => {
-    const [play, setPlay] = useState(false)
-    const [menuTab, setMenuTab] = useState("hidden")
+const VideoCard = ({video,onPress}) => {
+    const {user} = useGlobalContext()
 
-    const menu = () =>{
-        if(menuTab === "hidden"){
-            setMenuTab("")
-        }else{
-            setMenuTab("hidden")
-        }
-    }
-
-    const deleteVideo = async() =>{
-        try {
-            await deletePost($id)
-            setMenuTab("hidden")
-            Alert.alert("Success", "Post deleted successfully, Please refresh the page")
-        } catch (error) {
-            Alert.alert("Error", "Only the creator can delete the post")
-    }
-}
-
+ 
     
   return (
-    <View className="flex-col items-center px-4 mb-14">
-        <View className="flex-row gap-3 items-start">
+    <TouchableOpacity
+    onPress={onPress}
+    activeOpacity={0.3}
+     className="flex-col items-center mb-14">
+
+
+            <View
+            // activeOpacity={0.7}
+            className="w-full h-60 rounded-xl mt-3 relative justify-center items-center"
+            >
+            <Image
+            source={{uri: video.thumbnailUrl}}
+            className="w-full h-full roundedxl mt-3"
+            resizeMode='cover'
+            />
+           </View>
+            
+       
+         <View className="flex-row gap-3 items-start px-4 mt-3">
             <View className="justify-center items-center flex-row flex-1">
-                <View className="w-[46px] h-[46px] rounded-lg border border-secondary justify-center items-center p-0.5">
+                <View className="w-[46px] h-[46px] rounded-lg  justify-center items-center p-0.5">
                     <Image
-                    source={{uri: avatar}}
+                    source={{uri: user.image}}
                     className="w-full h-full rounded-lg"
                     resizeMode='cover'
                     />
                 </View>
                     <View className="justify-center flex-1 ml-3 gap-y-1">
-                        <Text className="text-white font-psemibold text-sm"
+                        <Text className="text-black font-psemibold text-sm dark:text-white"
                         numberOfLines={1}
                         >
-                            {title}
+                            {video.title}
                         </Text>
-                        <Text className="text-xs text-gray-100 font-pregular"
+                        <Text className="text-xs text-gray-500 font-pregular"
                         numberOfLines={1}
                         >
-                            {username}
+                            {video.user.username}
                         </Text>
                     </View>
             </View>
-            <TouchableOpacity className="pt-2"
-            onPress={menu}
-            >
-                <Image
-                source={icons.menu}
-                className="w-5 h-5"
-                resizeMode='contain'
-                
-                />
-            </TouchableOpacity>
-          
-        </View>
-        {play? (
-            <Video
-                source={{ uri: video }}
-                className="w-full h-60 rounded-xl mt-3"
-                resizeMode={ResizeMode.CONTAIN}
-                useNativeControls
-                shouldPlay
-                onPlaybackStatusUpdate={(status) => {
-                    if (status.didJustFinish) {
-                    setPlay(false);
-                    }
-                }}
-           />
-        ):(
-            <TouchableOpacity
-            activeOpacity={0.7}
-            onPress={()=> setPlay(true)}
-            onPressIn={()=>setMenuTab("hidden")}
-            className="w-full h-60 rounded-xl mt-3 relative justify-center items-center"
-            >
-            <Image
-            source={{uri: thumbnail}}
-            className="w-full h-full roundedxl mt-3"
-            resizeMode='cover'
-            />
-            <Image
-            source={icons.play}
-            className="w-12 h-12 absolute"
-            resizeMode='contain'
-            />
-           </TouchableOpacity>
-            
-        )}
-          <View className = {`absolute top-9 right-4  pl-4 pr-12 py-3  bg-black-100 border border-black-200 rounded-md ${menuTab}`}>
-          <TouchableOpacity className="mb-2 flex-row items-center gap-x-2">
+        
+        {/* this is fav or delete video */}
+          <View className="flex flex-row items-center justify-center " >
+          <TouchableOpacity className="flex-row items-center px-2">
                  <Image
                     source={icons.bookmark}
-                    className="w-4 h-4 text-gray-100"
+                    className="w-5 h-5 text-gray-100"
                     resizeMode='contain'
                 
                     />
-                <Text className="text-gray-100 font-psemibold pt-1">Save</Text> 
+         
            </TouchableOpacity>
             <TouchableOpacity 
-            onPress={deleteVideo}
-            className="flex-row items-center gap-x-2">
+            // onPress={deleteVideo}
+            className="flex-row items-center h-full px-2">
                 <Image
-                source={icons.logout}
-                className="w-5 h-5"
+                source={icons.deleteIcon}
+                className="w-6 h-6"
                 resizeMode='contain'
+                tintColor={"red"}
                 />
-                <Text className="text-gray-100 font-psemibold pt-1">Delete</Text> 
+ 
           </TouchableOpacity>
-         
+
             </View>
-    </View>
+        </View>
+    </TouchableOpacity>
   )
 }
 

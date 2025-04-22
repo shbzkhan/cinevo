@@ -4,6 +4,7 @@ import {SplashScreen ,Stack } from 'expo-router'
 import {useFonts} from "expo-font"
 import GlobalProvider from '../context/GlobalProvider.js'
 import { StatusBar } from 'expo-status-bar'
+// import {Toaster} from "@masumdev/rn-toast"
 
  SplashScreen.preventAutoHideAsync()
 
@@ -32,15 +33,17 @@ const RootLayout = () => {
 
   return (
     <GlobalProvider>
- <StatusBar style='light'/>
+ <StatusBar style='dark'/>
  <Stack>
 
     <Stack.Screen name ="index" options={{headerShown: false}}/>
     <Stack.Screen name ="(auth)" options={{headerShown: false}}/>
     <Stack.Screen name ="(tabs)" options={{headerShown: false}}/>
     <Stack.Screen name ="search/[query]" options={{headerShown: false}}/>
+    <Stack.Screen name ="videodetails/[id]" options={{headerShown: false}}/>
 
  </Stack>
+ {/* <Toaster/> */}
 </GlobalProvider>
   )
 }

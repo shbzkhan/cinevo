@@ -13,8 +13,8 @@ const EmptyState = ({title, subtitle}) => {
         className="w-[270px] h-[215px]"
         resizeMode='contain'
       />
-       <Text className="text-xl text-center font-psemibold text-white mt-2">{title}</Text>
-       <Text className="font-pmedium text-sm text-gray-100">{subtitle}</Text>
+       <Text className="text-xl text-center font-psemibold text-black mt-2">{title}</Text>
+       <Text className="font-pmedium text-sm text-gray-600 dark:text-gray-300">{subtitle}</Text>
 
        <CustomButton
        title="Create Video"

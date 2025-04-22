@@ -6,6 +6,7 @@ import CustomButton from '../components/CustomButton'
 import { StatusBar } from 'expo-status-bar'
 import { useGlobalContext } from '../context/GlobalProvider.js'
 
+
 const App = () => {
 
 const {isLoading, isLoggedIn} = useGlobalContext()
@@ -14,35 +15,32 @@ if (!isLoading && isLoggedIn) { //isLoggedIn no redirect to home page so temp ch
   return <Redirect href="/home" />
 }
 
+
   return (
-    <SafeAreaView className = "bg-primary h-full">
+    <SafeAreaView className = "bg-white h-full">
       {/* <StatusBar style='light'/> */}
     <ScrollView contentContainerStyle={{height: "100%"}} >
-      <View className="w-full justify-center items-center px-4">
+      <View className="w-full justify-center items-center px-4 my-auto">
               <Image
             source ={images.logo}
-            className="w-[130px] h-[84px]"
+            className="w-[230px] h-[184px]"
             resizeMode='contain'
         />
-        <Image
+        {/* <Image
           source={images.cards}
           className="max-w-[380px] w-full h-[300px]"
           resizeMode='contain'
-        />
+        /> */}
         <View className="relative mt-5">
-          <Text className="text-3xl text-white font-bold text-center">
+          <Text className="text-3xl text-black-200 font-bold text-center">
             Discover Endless Possibilities with {' '} 
-            <Text className="text-secondary-200">Aora</Text>
+            <Text className="text-blue-700">Cinevo</Text>
             </Text>
 
-            {/* <Image
-            source={images.path}
-            className="w-[136px] h-[15px]absolute -bottom-2 -right-8"
-            resizeMode='contain'
-            /> */}
+           
         </View>
         
-        <Text className="text-sm font-pregular text-gray-200 mt-7 text-center">Where creativity meets innovation: embark on a journey of limitless exploration with Aora</Text>
+        <Text className="text-sm font-pregular text-gray-600 mt-7 text-center">Where creativity meets innovation: embark on a journey of limitless exploration with Aora</Text>
 
         <CustomButton
         title="Continue with Email"

@@ -1,66 +1,87 @@
-import { View, Text, FlatList, Image, RefreshControl, Alert } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import { images } from '../../constants'
+import { icons, images } from '../../constants'
 import SearchInput from '../../components/SearchInput'
-import Trending from '../../components/Trending'
 import EmptyState from '../../components/EmptyState'
 import { useState, useEffect } from 'react'
-import { StatusBar } from 'expo-status-bar'
-import { getAllPosts, getLatestPosts } from '../../lib/appwrite'
-import useAppwrite from '../../lib/useAppwrite'
+
 import VideoCard from '../../components/VideoCard'
 import { useGlobalContext } from '../../context/GlobalProvider'
+import { router } from 'expo-router'
+import axios from 'axios'
 
 const Home = () => {
-const {data: posts, refetch} = useAppwrite(getAllPosts)
-const {data: latestPosts} = useAppwrite(getLatestPosts)
-const {user}= useGlobalContext()
+
+const {user, setLoading, colorScheme}= useGlobalContext()
   const [refreshing, setRefreshing] = useState(false)
+  const [videos, setVideos]= useState([])
+
+const fetchVideos = async () => {
+  try {
+    const {data} = await axios.get(`${process.env.EXPO_PUBLIC_MONGODB}/videos`);
+      setVideos(data.data);
+      console.log("Posts successfully fetched !!!!!")
+  } catch (error) {
+    console.log("Fetch error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const onRefresh = async () =>{
     setRefreshing(true)
-    await refetch();
-
+    fetchVideos();
     setRefreshing(false)
   }
 
-  console.log(posts)
+const handleVideoPress= (id)=>{
+  router.push(`../videodetails/${id}`)
+}
 
+useEffect(()=>{
+  fetchVideos()
+
+},[user])
   return (
-    <SafeAreaView className="bg-primary h-full">
-    <StatusBar style='light' />
-      <FlatList
-      data={posts}
-      keyExtractor={(item)=>{item.$id}}
-      renderItem={({item})=>(
-          <VideoCard video={item}
-          />
-      )}
-      ListHeaderComponent={(item)=>(
-        <View className="my-6 px-4 space-y-6">
-          <View className="justify-between items-start flex-row mb-6">
-          <View>
-            <Text className="font-pmedium text-sm text-gray-100">Welcome back</Text>
-            <Text className="text-2xl font-psemibold text-white">
-              {user?.username.charAt(0).toUpperCase() + user?.username.slice(1)}
-              </Text>
-          </View>
-
-          <View className="mt-1.5">
+    <SafeAreaView className="bg-white h-full dark:bg-black"> 
+     <View className="justify-between items-start flex-row py-1 px-4">
+          <View className="mt-1.5 flex flex-row items-center">
             <Image 
                 source={images.logoSmall}
                 className="w-9 h-10"
                 resizeMode='contain'
             />
+            <Text className="text-black font-psemibold text-2xl dark:text-white">Cinevo</Text>
           </View>
+          <View className="my-auto">
+            {/* <Text className="font-pmedium text-sm text-black">Welcome</Text>
+            <Text className="text-2xl font-psemibold text-gray-500">
+              {user?.username}
+              </Text> */}
+              <Image 
+                source={icons.search}
+                className="w-6 h-6 "
+                resizeMode='contain'
+                tintColor={colorScheme == "dark"?"white": "black"}
+            />
           </View>
-            <SearchInput/>
 
-            <View className="w-full flex-1 pt-5 pb-8">
-                <Text className="text-gray-100 text-lg font-pregular mb-3">Latest Video</Text>
-                <Trending posts={latestPosts ?? []}/>
-            </View>
+          
+          </View>
+      <FlatList
+      data={videos}   
+      keyExtractor={(item)=>{item._id}}
+      renderItem={({item})=>(
+          <VideoCard video={item}
+          onPress = {()=>handleVideoPress(item._id)}
+          />
+      )}
+      ListHeaderComponent={()=>(
+        <View className="my-6 px-4 space-y-6">
+         
+            <SearchInput/>
         </View>
       )}
       ListEmptyComponent={()=>(

@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "Aora",
-    "slug": "Aora",
-    "scheme": "aora",
+    "name": "Cinevo",
+    "slug": "Cinevo",
+    "scheme": "cinevo",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -10,25 +10,26 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#161622"
+      "backgroundColor": "#ffffff"
     },
     "ios": {
       "supportsTablet": true,
-      "package": "com.aora"
+      "package": "com.cinevo"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.aora"
+      "package": "com.cinevo"
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
       "expo-router",
-      "expo-secure-store"
+      "expo-secure-store",
+      "expo-video"
     ]
   }
 }
