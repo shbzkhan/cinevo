@@ -46,12 +46,13 @@ const TabsLayout = () => {
     }}
     />
 
-<Tabs.Screen
-    name='bookmark'
+
+    <Tabs.Screen
+    name='create'
     options={{
         headerShown: false,
         tabBarIcon: ({color, focused}) =>(
-            <TabIcon icon={icons.bookmark}
+            <TabIcon icon={icons.plus}
             color = {color}
             focused={focused}
             />
@@ -59,11 +60,11 @@ const TabsLayout = () => {
     }}
     />
     <Tabs.Screen
-    name='create'
+    name='ourvideo'
     options={{
         headerShown: false,
         tabBarIcon: ({color, focused}) =>(
-            <TabIcon icon={icons.plus}
+            <TabIcon icon={icons.videoIcon}
             color = {color}
             focused={focused}
             />

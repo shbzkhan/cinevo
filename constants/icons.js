@@ -11,7 +11,8 @@ import logout from "../assets/icons/logout.png";
 import eyeHide from "../assets/icons/eye-hide.png";
 import eye from "../assets/icons/eye.png";
 import play from "../assets/icons/play.png";
-import deleteIcon from "../assets/icons/deleteIcon.png"
+import deleteIcon from "../assets/icons/delete.png";
+import videoIcon from "../assets/icons/video-camera.png";
 
 
 export default {
@@ -28,5 +29,6 @@ export default {
   logout,
   eyeHide,
   eye,
-  deleteIcon
+  deleteIcon,
+  videoIcon
 };

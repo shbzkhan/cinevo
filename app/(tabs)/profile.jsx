@@ -15,23 +15,7 @@ import axios from 'axios'
 
 
 const Profile = () => {
-  const [refreshing, setRefreshing] = useState(false)
   const {user, setUser, setIsLoggedIn, colorScheme, toggleColorScheme}= useGlobalContext()
-  console.log("user", user._id)
-  const [posts, setPosts] = useState(user.videos)
-  // let posts = user.videos
-  const fetchUser = async () => {
-    try {
-      const {data} = await axios.get(`${process.env.EXPO_PUBLIC_MONGODB}/user/${user._id}`);
-        setPosts(data.user.videos);
-        console.log("Posts successfully fetched !!!!!")
-    } catch (error) {
-      console.log("Fetch error:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
   const logOut = async()=>{
     await AsyncStorage.removeItem("token")
     setUser(null)
@@ -39,20 +23,6 @@ const Profile = () => {
     router.replace("/sign-in")
   }
 
-  const onRefresh = async () =>{
-    setRefreshing(true)
-    fetchUser()
-    setRefreshing(false)
-  }
-
-const handleVideoPress= (id)=>{
-  router.push(`../videodetails/${id}`)
-}
-
-
-useEffect(()=>{
-  fetchUser()
-},[])
 
   return (
     <SafeAreaView className="bg-white h-full dark:bg-black">
@@ -61,17 +31,8 @@ useEffect(()=>{
     source={{uri: user.image}}
     resizeMode='cover'
     />
-      <FlatList
-      data={posts}
-      keyExtractor={(item)=>{item._id}}
-      renderItem={({item})=>(
-          <VideoCard video={item}
-          onPress = {()=>handleVideoPress(item._id)}
-          />
-          
-      )}
-      ListHeaderComponent={(item)=>(
-        <View className="w-full  items-center mt-6 mb-12 px-4">
+    <View>
+    <View className="w-full  items-center mt-6 mb-12 px-4">
           <TouchableOpacity
           className="w-full items-end px-4"
           onPress={logOut}
@@ -98,7 +59,7 @@ useEffect(()=>{
 
           <View className="mt-5 flex-row">
             <InfoBox
-            title={posts.length || 0}
+            title={ 0}
             subtitle="Posts"
             containerStyles="mr-10"
             textStyles="text-xl "
@@ -118,21 +79,7 @@ useEffect(()=>{
           />
           </View>
         </View>
-      )}
-      ListEmptyComponent={()=>(
-        <EmptyState
-        title="No video founded"
-        subtitle="No videos found for this search query"
-        
-        />
-      )}
-      refreshControl={
-              <RefreshControl
-              refreshing={refreshing}
-              onRefresh={onRefresh}
-              />
-            }
-      />
+    </View>
     </SafeAreaView>
   )
 }

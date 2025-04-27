@@ -6,7 +6,6 @@ import {images} from "../../constants"
 import FormField from '../../components/FormField'
 import CustomButton from "../../components/CustomButton.jsx"
 import { Link, router} from 'expo-router'
-import { createUser } from '../../lib/appwrite.js'
 import { useGlobalContext } from '../../context/GlobalProvider'
 import axios from 'axios'
 const SignUp = () => {

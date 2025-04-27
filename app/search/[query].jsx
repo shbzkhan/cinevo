@@ -10,14 +10,14 @@ import VideoCard from '../../components/VideoCard'
 import { useLocalSearchParams } from 'expo-router'
 
 const Search = () => {
-  const {query} = useLocalSearchParams()
-const {data: posts, refetch} = useAppwrite(
-  ()=> searchPosts(query)
-)
+//   const {query} = useLocalSearchParams()
+// // const {data: posts, refetch} = useAppwrite(
+//   ()=> searchPosts(query)
+// )
 
- useEffect(()=>{
-  refetch()
- },[query])
+//  useEffect(()=>{
+//   refetch()
+//  },[query])
 
   return (
     <SafeAreaView className="bg-primary h-full">
@@ -34,7 +34,7 @@ const {data: posts, refetch} = useAppwrite(
             <Text className="font-pmedium text-sm text-gray-100">Search Result</Text>
             <Text className="text-2xl font-psemibold text-white">{query}</Text>
               <View className="mt-6 mb-8">
-                <SearchInput initialQuery={query}/>
+                {/* <SearchInput initialQuery={query}/> */}
 
               </View>
 

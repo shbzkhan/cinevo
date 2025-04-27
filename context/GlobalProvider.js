@@ -1,5 +1,4 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getCurrentUser } from "../lib/appwrite";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useColorScheme } from 'nativewind'
 

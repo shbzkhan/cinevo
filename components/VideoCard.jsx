@@ -1,16 +1,11 @@
-import { View, Text, Image, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, Image, TouchableOpacity, ActivityIndicator} from 'react-native'
 import React, { useState } from 'react'
 import { icons } from '../constants'
-import { deletePost} from '../lib/appwrite'
-import { Alert } from 'react-native'
 import { useGlobalContext } from '../context/GlobalProvider'
-import axios from 'axios'
 
-const VideoCard = ({video,onPress}) => {
+const VideoCard = ({video,onPress, deleteAlert, deleteLoading}) => {
     const {user} = useGlobalContext()
 
- 
-    
   return (
     <TouchableOpacity
     onPress={onPress}
@@ -19,7 +14,6 @@ const VideoCard = ({video,onPress}) => {
 
 
             <View
-            // activeOpacity={0.7}
             className="w-full h-60 rounded-xl mt-3 relative justify-center items-center"
             >
             <Image
@@ -64,8 +58,10 @@ const VideoCard = ({video,onPress}) => {
                     />
          
            </TouchableOpacity>
-            <TouchableOpacity 
-            // onPress={deleteVideo}
+           {   deleteLoading === video._id.toString() ? <ActivityIndicator size={"small"}/>
+           :
+            video.user._id.toString() === user._id.toString() && (<TouchableOpacity 
+            onPress={()=>deleteAlert(video._id)}
             className="flex-row items-center h-full px-2">
                 <Image
                 source={icons.deleteIcon}
@@ -74,8 +70,9 @@ const VideoCard = ({video,onPress}) => {
                 tintColor={"red"}
                 />
  
-          </TouchableOpacity>
-
+          </TouchableOpacity>)
+        
+          }
             </View>
         </View>
     </TouchableOpacity>

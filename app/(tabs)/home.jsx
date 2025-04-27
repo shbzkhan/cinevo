@@ -1,4 +1,4 @@
-import { View, Text, FlatList, Image, RefreshControl } from 'react-native'
+import { View, Text, FlatList, Image, RefreshControl,Alert } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import { icons, images } from '../../constants'
@@ -16,6 +16,7 @@ const Home = () => {
 const {user, setLoading, colorScheme}= useGlobalContext()
   const [refreshing, setRefreshing] = useState(false)
   const [videos, setVideos]= useState([])
+  const [deleteLoading, setDeleteLoading] = useState(null)
 
 const fetchVideos = async () => {
   try {
@@ -28,6 +29,46 @@ const fetchVideos = async () => {
     setLoading(false);
   }
 };
+
+const deleteAlert = (id) => {
+
+    Alert.alert("Delete", "You want to delete the post", [
+      {
+        text: "Cancel",
+        style: "cancel",
+      },
+      {
+        text: "Delete",
+         onPress:()=> deleteVideo(id),
+        style: "destructive",
+      },
+    ]);
+  };
+
+  const deleteVideo = async (id) => {
+    
+    setDeleteLoading(id)
+    try {
+      const { data } = await axios.delete(
+        `${process.env.EXPO_PUBLIC_MONGODB}/videos/delete/${id}`,
+        {
+          data: {
+            userId: user._id,
+          },
+        }
+      );
+      console.log("video deleted");
+      if (data.success) {
+         const deleteVideo = videos.filter(video => video._id !== id )
+         setVideos(deleteVideo)
+      }
+    } catch (error) {
+      console.log(error.response.data.message);
+      Alert.alert("Error", error.response.data.message);
+    } finally {
+      setDeleteLoading(null)
+    }
+  };
 
 
   const onRefresh = async () =>{
@@ -43,7 +84,7 @@ const handleVideoPress= (id)=>{
 useEffect(()=>{
   fetchVideos()
 
-},[user])
+},[])
   return (
     <SafeAreaView className="bg-white h-full dark:bg-black"> 
      <View className="justify-between items-start flex-row py-1 px-4">
@@ -75,6 +116,8 @@ useEffect(()=>{
       keyExtractor={(item)=>{item._id}}
       renderItem={({item})=>(
           <VideoCard video={item}
+          deleteAlert = {deleteAlert}
+          deleteLoading={deleteLoading}
           onPress = {()=>handleVideoPress(item._id)}
           />
       )}
