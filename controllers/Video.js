@@ -45,14 +45,6 @@ exports.VideoFile = async(req, res)=>{
             description,
             user: userId
         })
-        await User.findByIdAndUpdate(
-            {_id:userId},
-            {
-                $push:{
-                    videos: videoData._id
-                }
-            },
-            {new: true})
         return res.status(200).json({
             success: true,
             data: videoData,
@@ -69,7 +61,11 @@ exports.VideoFile = async(req, res)=>{
 
 exports.getAllPost =async(req, res)=>{
     try {
-        const video = await Video.find().populate("user").exec()
+        const video = await Video.find()
+        .sort({createdAt: -1})
+        .populate("user")
+        .exec()
+        
         res.status(200).json({
             success: true,
             data: video,
@@ -159,6 +155,25 @@ exports.deletePost = async(req, res)=>{
         res.status(500).json({
             success: false,
             message: "Post not deleted please try again!!"
+        })
+    }
+}
+
+exports.getUserPost =async(req, res)=>{
+    try {
+        const id = req.params.id
+        const video = await Video.find({user: id})
+        .sort({createdAt: -1})
+        .populate("user").exec()
+        res.status(200).json({
+            success: true,
+            data: video,
+            message: "user Video fetch successfully"
+        })
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: "Video not fetch please try again!!"
         })
     }
 }

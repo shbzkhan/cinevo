@@ -1,5 +1,5 @@
 const User = require("../models/user")
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 exports.signUp = async(req, res)=>{
@@ -61,7 +61,7 @@ exports.signIn = async(req, res)=>{
     try {
         let user = await User.findOne({
             $or:[{email:emailOrUsername}, {username:emailOrUsername }]
-        }).populate("videos").exec()
+        })
         
         if(!user){
             return res.status(404).json({
@@ -76,7 +76,6 @@ exports.signIn = async(req, res)=>{
                 _id:user._id,
                 username:user.username,
                 image: user.image,
-                videos: user.videos
             }
             const token = await jwt.sign(
                 payload,
